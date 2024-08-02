@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        
+        //can do by set
+
+        int cnt=1;
+
+        int i=0,j=0;
+
+        while(j<nums.size()){
+            if(nums[i]!=nums[j]){
+                nums[i+1]=nums[j];
+                i++;
+                cnt++;
+            }
+
+            j++;
+        }
+        return cnt;
+    }
+};
