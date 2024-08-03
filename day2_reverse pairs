@@ -1,0 +1,24 @@
+#include <ext/pb_ds/assoc_container.hpp> 
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds; 
+  
+// #define ordered_set tree<long long, null_type,less<long long>, rb_tree_tag,tree_order_statistics_node_update> 
+
+typedef long long ll;
+
+template <class type1>
+using ordered_multiset = tree <type1, null_type, less_equal <type1>, rb_tree_tag, tree_order_statistics_node_update>;
+
+class Solution {
+public:
+    int reversePairs(vector<int>& nums) {
+        int n=nums.size(),ans=0;
+        ordered_multiset<ll> os;
+
+        for(int i=n-1;i>=0;i--){
+            ans+=os.order_of_key(nums[i]);
+            os.insert(2LL*nums[i]);
+        }
+        return ans;
+    }
+};
