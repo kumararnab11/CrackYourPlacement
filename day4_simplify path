@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string simplifyPath(string p) {
+        p+="  ";
+        int n= p.size();
+        string s;
+        
+        stack <string> st;
+        for(int i=1 ; p[i]!=' ' ; i++){
+            if(p[i]=='/'){
+                if(!s.empty()){
+                   st.push(s);
+                s.clear();
+                }
+            }
+
+            else if(p[i]!='.'&&p[i]!='/'){
+                s+=p[i];
+            }
+
+            else if(p[i]=='.'){
+                    if((p[i+1]=='/'||p[i+1]==' ')&&p[i-1]=='/'){
+                        i++;
+                        continue;
+                    }
+                    else if(p[i-1]=='/'&&p[i+1]=='.'&&(p[i+2]=='/'||p[i+2]==' ')){
+                       if(!st.empty()) st.pop();
+                       i+=2;
+                    }
+                    else{
+                        while((p[i]!='/'&&p[i]!=' ')&&(i<n)){
+                            s+=p[i];
+                            i++;
+                        }
+                        st.push(s);
+                        if(!s.empty())s.clear();
+                        i--;
+                    }
+            }
+
+
+        }
+
+        if(!s.empty()) st.push(s);
+
+        string ans;
+        stack <string> stk;
+
+        while(!st.empty()){
+            string str = st.top();
+            stk.push(str);
+            if(!str.empty()) str.clear();
+            st.pop();
+        }
+
+           while(!stk.empty()){
+               ans+='/';
+                string str = stk.top();
+                stk.pop();
+                ans+=str;
+               if(!str.empty()) str.clear();
+           }
+           if(ans=="") ans+='/';
+           return ans;
+
+    }
+};
